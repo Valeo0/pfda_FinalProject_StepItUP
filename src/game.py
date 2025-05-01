@@ -19,10 +19,18 @@ arrow_images = [
 
 class Arrow():
     
-    def __init__(self,pos=(300,0), size = 25,):
+    def __init__(self,pos=(300,0), size = 25, life= 3000):
         self.image = random.choice(arrow_images)
         self.pos = pos
         self.size = size
+        self.age = 0
+        self.life = life
+        self.dead = False
+
+    def update(self,dt):
+        self.age += dt
+        if self.age > self.life:
+            self.dead = True
     
     def _update_pos(self):
         x,y = self.pos
@@ -71,9 +79,12 @@ def main():
         for arrow in arrows:
             arrow.draw(screen)
             arrow._update_pos()
+            arrow.update(dt)
         pygame.display.update()
         for idx,arrow in enumerate(arrows):
             if arrow.pos[1] >= screen_height:
+                del arrows[idx]
+            if arrow.dead:
                 del arrows[idx]
                 arrows.append(Arrow())
         #Event Loop

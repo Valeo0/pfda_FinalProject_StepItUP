@@ -4,8 +4,10 @@ import pygame
 screen_width = 800
 screen_height = 600
 arrow_size = 50
-arrow_speed = 5
+arrow_speed = 1/2
 arrows = []
+
+
 
 
 arrow_images = [
@@ -17,7 +19,7 @@ arrow_images = [
 
 class Arrow():
     
-    def __init__(self,pos=(0,0), size = 50,):
+    def __init__(self,pos=(300,0), size = 25,):
         self.image = random.choice(arrow_images)
         self.pos = pos
         self.size = size
@@ -65,10 +67,15 @@ def main():
     running = True
     while running:
         screen.fill((0,0,0))
+        pygame.draw.line(screen,(255,46,31,255),(0,500),(screen_width,500))
         for arrow in arrows:
             arrow.draw(screen)
             arrow._update_pos()
         pygame.display.update()
+        for idx,arrow in enumerate(arrows):
+            if arrow.pos[1] >= screen_height:
+                del arrows[idx]
+                arrows.append(Arrow())
         #Event Loop
         for event in pygame.event.get():
             if event.type == pygame.QUIT:

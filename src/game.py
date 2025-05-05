@@ -70,6 +70,7 @@ arrows.append(arrowclass)
 
 def main():
     pygame.init()
+    previous_time = pygame.time.get_ticks()
     pygame.display.set_caption("Step It Up!")
     screen = pygame.display.set_mode((screen_width,screen_height))
     running = True
@@ -79,12 +80,15 @@ def main():
         for arrow in arrows:
             arrow.draw(screen)
             arrow._update_pos()
+            dt = pygame.time.get_ticks() - previous_time
             arrow.update(dt)
+        previous_time = pygame.time.get_ticks()
         pygame.display.update()
         for idx,arrow in enumerate(arrows):
             if arrow.pos[1] >= screen_height:
                 del arrows[idx]
-            if arrow.dead:
+                arrows.append(Arrow())
+            elif arrow.dead:
                 del arrows[idx]
                 arrows.append(Arrow())
         #Event Loop

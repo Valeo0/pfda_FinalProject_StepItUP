@@ -16,7 +16,12 @@ arrow_images = [
     pygame.image.load("left_arrow.png"),
     pygame.image.load("right_arrow.png")
 ]
-
+arrow_directions = {
+"up_arrow.png":pygame.K_UP,
+ "down_arrow.png": pygame.K_DOWN,
+"left_arrow.png": pygame.K_LEFT,
+ "right_arrow.png": pygame.K_RIGHT
+}
 class Arrow():
     
     def __init__(self,pos=(300,0), size = 25, life= 3000):
@@ -75,12 +80,12 @@ def main():
     screen = pygame.display.set_mode((screen_width,screen_height))
     running = True
     while running:
+        dt = pygame.time.get_ticks() - previous_time
         screen.fill((0,0,0))
         pygame.draw.line(screen,(255,46,31,255),(0,500),(screen_width,500))
         for arrow in arrows:
             arrow.draw(screen)
             arrow._update_pos(dt)
-            dt = pygame.time.get_ticks() - previous_time
             arrow.update(dt)
         previous_time = pygame.time.get_ticks()
         pygame.display.update()

@@ -4,7 +4,7 @@ import pygame
 screen_width = 800
 screen_height = 600
 arrow_size = 50
-arrow_speed = 1/2
+arrow_speed = 1/2 
 arrows = []
 
 
@@ -32,9 +32,9 @@ class Arrow():
         if self.age > self.life:
             self.dead = True
     
-    def _update_pos(self):
+    def _update_pos(self, dt):
         x,y = self.pos
-        y += arrow_speed
+        y += arrow_speed * dt
         self.pos = (x,y)
 
     def draw(self,surface):
@@ -79,7 +79,7 @@ def main():
         pygame.draw.line(screen,(255,46,31,255),(0,500),(screen_width,500))
         for arrow in arrows:
             arrow.draw(screen)
-            arrow._update_pos()
+            arrow._update_pos(dt)
             dt = pygame.time.get_ticks() - previous_time
             arrow.update(dt)
         previous_time = pygame.time.get_ticks()
@@ -95,6 +95,16 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
+            elif event.type == pygame.KEYDOWN:
+                #Check which key was pressed
+                if event.key == pygame.K_UP:
+                    print("Up arrow key is pressed")
+                elif event.key == pygame.K_DOWN:
+                    print("Down arrow key is pressed")
+                elif event.key == pygame.K_LEFT:
+                    print("Left arrow key is pressed")
+                elif event.key == pygame.K_RIGHT:
+                    print("Right arrow key is pressed")
     pygame.display.update()
 
 if __name__ == "__main__":

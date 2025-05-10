@@ -31,6 +31,9 @@ class Arrow():
         self.age = 0
         self.life = life
         self.dead = False
+        self.filename = random.choice(list(arrow_directions.keys()))
+        self.image = pygame.image.load(self.filename)
+        self.direction = arrow_directions[self.filename]
 
     def update(self,dt):
         self.age += dt
@@ -82,7 +85,7 @@ def main():
     while running:
         dt = pygame.time.get_ticks() - previous_time
         screen.fill((0,0,0))
-        pygame.draw.line(screen,(255,46,31,255),(0,500),(screen_width,500))
+        pygame.draw.line(screen,(255,46,31,255),(0,500),(screen_width,500,),10)
         for arrow in arrows:
             arrow.draw(screen)
             arrow._update_pos(dt)
@@ -102,14 +105,20 @@ def main():
                 running = False
             elif event.type == pygame.KEYDOWN:
                 #Check which key was pressed
-                if event.key == pygame.K_UP:
-                    print("Up arrow key is pressed")
-                elif event.key == pygame.K_DOWN:
-                    print("Down arrow key is pressed")
-                elif event.key == pygame.K_LEFT:
-                    print("Left arrow key is pressed")
-                elif event.key == pygame.K_RIGHT:
-                    print("Right arrow key is pressed")
+                for arrow in arrows:
+                    print(f"Arrow position: {arrow.pos[1]}, Arrow direction:{arrow.direction}")
+                    if event.key == arrow.direction and 490 <= arrow.pos[1] <= 520:
+                        print("You got a point!")
+                    else:
+                        print(f"Key pressed: {event.key}")
+                # if event.key == pygame.K_UP:
+                #     print("Up arrow key is pressed")
+                # elif event.key == pygame.K_DOWN:
+                #     print("Down arrow key is pressed")
+                # elif event.key == pygame.K_LEFT:
+                #     print("Left arrow key is pressed")
+                # elif event.key == pygame.K_RIGHT:
+                #     print("Right arrow key is pressed")
     pygame.display.update()
 
 if __name__ == "__main__":

@@ -78,13 +78,24 @@ arrows.append(arrowclass)
 
 def main():
     pygame.init()
+    pygame.font.init()
     previous_time = pygame.time.get_ticks()
     pygame.display.set_caption("Step It Up!")
+    score = 0
+    strikes = 0
     screen = pygame.display.set_mode((screen_width,screen_height))
+    score_font = pygame.font.Font(None, size = 50)
+    text_surface = score_font.render("Player Score", True, (255,255,255))
+    score_surface = score_font.render(str(score), True,(255,255,255))
+    strike_surface = score_font.render("Strikes", True, (255,255,255))
+    red_X_surface = score_font.render("X",True,(252,3,15))
     running = True
     while running:
         dt = pygame.time.get_ticks() - previous_time
         screen.fill((0,0,0))
+        screen.blit(text_surface,(0,0))
+        screen.blit(score_surface,(40,40))
+        screen.blit(strike_surface,(400,0))
         pygame.draw.line(screen,(255,46,31,255),(0,500),(screen_width,500,),10)
         for arrow in arrows:
             arrow.draw(screen)
@@ -107,18 +118,15 @@ def main():
                 #Check which key was pressed
                 for arrow in arrows:
                     print(f"Arrow position: {arrow.pos[1]}, Arrow direction:{arrow.direction}")
-                    if event.key == arrow.direction and 490 <= arrow.pos[1] <= 520:
+                    if event.key == arrow.direction and 330 <= arrow.pos[1] <= 430:
                         print("You got a point!")
+                        score += 1
+                        score_surface = score_font.render(str(score), True, (255, 255, 255))
                     else:
                         print(f"Key pressed: {event.key}")
-                # if event.key == pygame.K_UP:
-                #     print("Up arrow key is pressed")
-                # elif event.key == pygame.K_DOWN:
-                #     print("Down arrow key is pressed")
-                # elif event.key == pygame.K_LEFT:
-                #     print("Left arrow key is pressed")
-                # elif event.key == pygame.K_RIGHT:
-                #     print("Right arrow key is pressed")
+                        screen.blit(red_X_surface,(400,50))
+
+                
     pygame.display.update()
 
 if __name__ == "__main__":

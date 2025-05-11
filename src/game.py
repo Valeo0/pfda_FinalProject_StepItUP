@@ -96,6 +96,9 @@ def main():
         screen.blit(text_surface,(0,0))
         screen.blit(score_surface,(40,40))
         screen.blit(strike_surface,(400,0))
+        for i in range(strikes):
+                            red_X_surface = score_font.render("X",True,(252,3,15))
+                            screen.blit(red_X_surface,(400 + i * 30, 50))
         pygame.draw.line(screen,(255,46,31,255),(0,500),(screen_width,500,),10)
         for arrow in arrows:
             arrow.draw(screen)
@@ -117,14 +120,15 @@ def main():
             elif event.type == pygame.KEYDOWN:
                 #Check which key was pressed
                 for arrow in arrows:
-                    print(f"Arrow position: {arrow.pos[1]}, Arrow direction:{arrow.direction}")
+
                     if event.key == arrow.direction and 330 <= arrow.pos[1] <= 430:
-                        print("You got a point!")
                         score += 1
                         score_surface = score_font.render(str(score), True, (255, 255, 255))
                     else:
-                        print(f"Key pressed: {event.key}")
-                        screen.blit(red_X_surface,(400,50))
+                        strikes += 1
+                        
+
+                    pygame.display.update()       
 
                 
     pygame.display.update()

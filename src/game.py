@@ -127,8 +127,15 @@ def main():
                     else:
                         strikes += 1
                         
-
-                    pygame.display.update()       
+                if strikes == 3:
+                    while running:
+                        game_over = pygame.image.load("game_over_screen.png")
+                        screen.blit(game_over,(0,0))
+                        screen.blit(score_surface,(400,360))
+                        for event in pygame.event.get():
+                            if event.type == pygame.QUIT:
+                                running = False
+                        pygame.display.update()       
 
                 
     pygame.display.update()

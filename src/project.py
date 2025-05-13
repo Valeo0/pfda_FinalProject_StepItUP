@@ -56,14 +56,17 @@ def main():
     pygame.font.init()
     previous_time = pygame.time.get_ticks()
     pygame.display.set_caption("Step It Up!")
+    #Player Score and Strike Values
     score = 0
     strikes = 0
     screen = pygame.display.set_mode((screen_width,screen_height))
+    #Font display surfaces and rendering
     score_font = pygame.font.Font(None, size = 50)
     text_surface = score_font.render("Player Score", True, (255,255,255))
     score_surface = score_font.render(str(score), True,(255,255,255))
     strike_surface = score_font.render("Strikes", True, (255,255,255))
     red_X_surface = score_font.render("X",True,(252,3,15))
+    #Display event loop
     running = True
     while running:
         dt = pygame.time.get_ticks() - previous_time
@@ -73,14 +76,16 @@ def main():
         screen.blit(strike_surface,(400,0))
         for i in range(strikes):
                             red_X_surface = score_font.render("X",True,(252,3,15))
-                            screen.blit(red_X_surface,(400 + i * 30, 50))
-        pygame.draw.line(screen,(255,46,31,255),(0,500),(screen_width,500,),10)
+                            screen.blit(red_X_surface,(400 + i * 30, 50)) #Formula to correctly space the X's Apart
+        pygame.draw.line(screen,(255,46,31,255),(0,500),(screen_width,500,),10) #Line drawn/ positioning
+        #For loop to update arrow positioning to avoid lag
         for arrow in arrows:
             arrow.draw(screen)
             arrow._update_pos(dt)
             arrow.update(dt)
         previous_time = pygame.time.get_ticks()
         pygame.display.update()
+        #Deleting dead arrows
         for idx,arrow in enumerate(arrows):
             if arrow.pos[1] >= screen_height:
                 del arrows[idx]
@@ -88,7 +93,7 @@ def main():
             elif arrow.dead:
                 del arrows[idx]
                 arrows.append(Arrow())
-        #Event Loop
+        # Main Event Loop
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False

@@ -2,10 +2,10 @@
 
 
 ## Demo
-Demo Video: <https://youtu.be/m13xUGVz6Z4
+Demo Video: <https://youtu.be/m13xUGVz6Z4>
 
 ## GitHub Repository
-GitHub Repo: <https://github.com/Valeo0/pfda_FinalProject_StepItUP.git
+GitHub Repo: <https://github.com/Valeo0/pfda_FinalProject_StepItUP.git>
 
 ## Description
 This project is called “Step it Up!”
